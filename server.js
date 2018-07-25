@@ -1,13 +1,16 @@
-import http from 'http';
-import config, { nodeEnv, logStars } from './config';
+import express from 'express';
+import config from './config';
+import apiRouter from './api';
 
-const callback = (req, res) => {
-  res.write('Http hello\n');
-  setTimeout(() => {
-    res.write('Another message\n');
-    res.end();
-  }, 3000);
-};
+const server = express();
 
-const server = http.createServer(callback);
-server.listen(config.port);
+server.get('/', (req, res) => {
+  res.send('This is a string\n');
+});
+
+server.use('/api', apiRouter);
+server.use(express.static('public'));
+
+server.listen(config.port, (req, res) => {
+  console.info(`Express listening to ${config.port}`);
+});
