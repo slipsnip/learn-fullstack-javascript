@@ -4,15 +4,34 @@ module.exports = {
     path: `${__dirname}/public`,
     filename: 'bundle.js',
   },
+  resolve: { extensions: ['.js', '.jsx'] },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.json$/,
-        loader: 'json-loader',
+        use: {
+          loader: 'json-loader',
+        },
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'react',
+              [
+                'env',
+                {
+                  targets: {
+                    browsers: ['last 2 versions', 'safari >= 7'],
+                  },
+                },
+              ],
+              'stage-2',
+            ],
+          },
+        },
       },
     ],
   },
