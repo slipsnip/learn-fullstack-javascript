@@ -3,9 +3,10 @@ import config from './config';
 import apiRouter from './api';
 
 const server = express();
+server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {
-  res.send('This is a string\n');
+  res.render('index', { content: '<em>This is content</em>' });
 });
 
 server.use('/api', apiRouter);
