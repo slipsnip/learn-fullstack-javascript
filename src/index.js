@@ -1,8 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
-ReactDOM.render(
-  <h2 className="text-center">
-    Hello React with JSX!
-  </h2>, document.getElementById('root')
-);
+const Header = ({ message }) => {
+  return (
+    <h2 className="text-center">
+      {message}
+    </h2>
+  );
+};
+
+Header.propTypes = {
+  message: PropTypes.string.isRequired,
+};
+
+const App = () => {
+  return (
+    <div className="App">
+      <Header message="Naming Contests" />
+      <div>
+        ...
+      </div>
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
