@@ -16,6 +16,7 @@ module.exports = {
   },
   "plugins": [ "react" ],
   "rules": {
+    "react/jsx-filename-extension": [0],
     "indent": ["error", 2],
     "linebreak-style": ["error","unix"],
     "quotes": ["error","single"],
