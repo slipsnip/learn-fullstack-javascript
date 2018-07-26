@@ -8,12 +8,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.json$/,
-        use: {
-          loader: 'json-loader',
-        },
-      },
-      {
         test: /\.js$/,
         use: {
           loader: 'babel-loader',
