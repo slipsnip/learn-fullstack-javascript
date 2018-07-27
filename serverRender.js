@@ -12,7 +12,10 @@ function catchErrors(fn) {
 
 const serverRender = async () => {
   const res = await axios.get(`${config.serverUrl}/api/contests`);
-  return ReactDOMServer.renderToString(<App initialContests={res.data.contests} />);
+  return {
+    initialMarkup: ReactDOMServer.renderToString(<App initialContests={res.data.contests} />),
+    initialData: res.data,
+  }
 };
 
 export default catchErrors(serverRender);

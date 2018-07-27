@@ -5,17 +5,21 @@ import config from './config';
 import apiRouter from './api';
 import serverRender from './serverRender';
 
-
 const server = express();
-server.use(sassMiddleware({
-  src: path.join(__dirname, 'sass'),
-  dest: path.join(__dirname, 'public'),
-}));
+server.use(
+  sassMiddleware({
+    src: path.join(__dirname, 'sass'),
+    dest: path.join(__dirname, 'public'),
+  }),
+);
 server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {
   serverRender()
-    .then(content => res.render('index', { content }))
+    .then(({ initialMarkup, initialData }) => res.render('index', {
+      initialMarkup,
+      initialData,
+    }))
     .catch(err => console.log(err));
 });
 
