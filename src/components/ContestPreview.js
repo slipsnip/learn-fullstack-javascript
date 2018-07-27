@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class ContestPreview extends React.Component {
-  // { contest } = this.props;
-  // { contestName, categoryName } = contest;
-  contest = this.props.contest;
-
   handleClick = () => {
-    console.log(this.contest.contestName);
+    const { contest } = this.props;
+    console.log(contest.contestName);
   };
 
   render() {
-
+    const { contest } = this.props;
+    const { contestName, categoryName } = contest;
     return (
       <div className="link ContestPreview" role="button" onClick={this.handleClick}>
         <div className="category-name">
-          {this.contest.categoryName}
+          {categoryName}
         </div>
         <div className="contest-name">
-          {this.contest.contestName}
+          {contestName}
         </div>
       </div>
     );
