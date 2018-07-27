@@ -1,14 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const ContestPreview = ({ contest }) => (
-  <div className="ContestPreview">
-    <div className="category-name">
-      {contest.categoryName}
-    </div>
-    <div className="contest-name">
-      {contest.contestName}
-    </div>
-  </div>
-);
+class ContestPreview extends React.Component {
+  { contest } = this.props;
+  { contestName, categoryName } = contest;
+
+  handleClick = () => {
+    console.log(contestName);
+  };
+
+  render() {
+
+    return (
+      <div className="link ContestPreview" role="button" onClick={this.handleClick}>
+        <div className="category-name">
+          {categoryName}
+        </div>
+        <div className="contest-name">
+          {contestName}
+        </div>
+      </div>
+    );
+  }
+}
+
+ContestPreview.propTypes = {
+  contest: PropTypes.shape({
+    id: PropTypes.number,
+    categoryName: PropTypes.string,
+    contestName: PropTypes.string,
+  }).isRequired,
+};
 
 export default ContestPreview;
