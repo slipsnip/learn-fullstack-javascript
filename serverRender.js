@@ -10,11 +10,27 @@ function catchErrors(fn) {
   };
 }
 
-const serverRender = async () => {
-  const res = await axios.get(`${config.serverUrl}/api/contests`);
+const getInitialData = (contestId, apiData) => {
+  if (contestId) {
+    return {
+      currentContestId: apiData.id,
+      contests: {
+        [apiData.id]: apiData,
+      },
+    };
+  }
+  return { contests: apiData.contests };
+}
+
+const serverRender = async (contestId) => {
+  const url = contestId
+    ? `${config.serverUrl}/api/contests/${contestId}`
+    : `${config.serverUrl}/api/contests`;
+  const res = await axios.get(url);
+  const initialData = getInitialData(contestId, res.data);
   return {
-    initialMarkup: ReactDOMServer.renderToString(<App initialData={res.data} />),
-    initialData: res.data,
+    initialMarkup: ReactDOMServer.renderToString(<App initialData={initialData} />),
+    initialData,
   }
 };
 
