@@ -18,7 +18,7 @@ class App extends React.Component {
     super(props);
     const { initialData } = this.props;
     this.state = initialData;
-  }
+  };
 
   fetchContest = (contestId) => {
     pushState({ currentContestId: contestId }, `/contest/${contestId}`);
@@ -30,6 +30,16 @@ class App extends React.Component {
           [contest.id]: contest,
         },
       }));
+    });
+  };
+
+  fetchContestList = () => {
+    pushState({ currentContestId: null }, '/');
+    api.fetchContestList().then((contests) => {
+      this.setState({
+        currentContestId: null,
+        contests,
+      });
     });
   };
 
@@ -46,7 +56,12 @@ class App extends React.Component {
   currentContent() {
     const { contests, currentContestId } = this.state;
     if (currentContestId) {
-      return <Contest {...this.currentContest()} />;
+      return (
+        <Contest
+          contestListClick={this.fetchContestList}
+          {...this.currentContest()}
+        />
+      );
     }
     return <ContestList onContestClick={this.fetchContest} contests={contests} />;
   }
