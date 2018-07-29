@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 
 class Contest extends React.Component {
   render() {
-    const { id } = this.props;
+    const { description } = this.props;
     return (
       <div className="Contest">
-        {id}
+        {description}
       </div>
     );
   }
 }
 
 Contest.propTypes = {
-  id: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default Contest;
