@@ -6,19 +6,32 @@ import Contest from './Contest';
 import * as api from '../api';
 
 const pushState = (obj, url) => window.history.pushState(obj, '', url);
+const onPopState = (handler) => {
+  window.onpopstate = handler;
+};
 
 class App extends React.Component {
   static propTypes = {
     initialData: PropTypes.shape({
       contests: PropTypes.object,
     }).isRequired,
-  };
+  }
 
   constructor(props) {
     super(props);
     const { initialData } = this.props;
     this.state = initialData;
-  };
+  }
+
+  componentDidMount() {
+    onPopState(event => (
+      this.setState({ currentContestId: (event.state || {}).currentContestId })
+    ));
+  }
+
+  componentWillUnmount() {
+    onPopState(null);
+  }
 
   fetchContest = (contestId) => {
     pushState({ currentContestId: contestId }, `/contest/${contestId}`);
@@ -31,7 +44,7 @@ class App extends React.Component {
         },
       }));
     });
-  };
+  }
 
   fetchContestList = () => {
     pushState({ currentContestId: null }, '/');
