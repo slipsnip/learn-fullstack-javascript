@@ -8,7 +8,7 @@ MongoClient.connect(
   { useNewUrlParser: true },
   (err, client) => {
     assert.equal(null, err);
-    const db = client(`${config.mongodbName}`);
+    const db = client.db(`${config.mongodbName}`);
     let contestCount = 0;
     db.collection('contests')
       .find({})
