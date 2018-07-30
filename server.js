@@ -20,7 +20,10 @@ server.get(['/', '/contest/:contestId'], (req, res) => {
       initialMarkup,
       initialData,
     }))
-    .catch(err => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(404).send('Bad Request!');
+    });
 });
 
 server.use('/api', apiRouter);
