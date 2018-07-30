@@ -37,10 +37,10 @@ class App extends React.Component {
     pushState({ currentContestId: contestId }, `/contest/${contestId}`);
     api.fetchContest(contestId).then((contest) => {
       this.setState(prevState => ({
-        currentContestId: contest.id,
+        currentContestId: contest._id,
         contests: {
           ...prevState.contests,
-          [contest.id]: contest,
+          [contest._id]: contest,
         },
       }));
     });

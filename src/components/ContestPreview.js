@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class ContestPreview extends React.Component {
   handleClick = () => {
     const { onClick, contest } = this.props;
-    onClick(contest.id);
+    onClick(contest._id);
   };
 
   render() {
@@ -25,7 +25,7 @@ class ContestPreview extends React.Component {
 
 ContestPreview.propTypes = {
   contest: PropTypes.shape({
-    id: PropTypes.number,
+    _id: PropTypes.string,
     categoryName: PropTypes.string,
     contestName: PropTypes.string,
   }).isRequired,
