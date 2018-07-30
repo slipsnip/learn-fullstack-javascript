@@ -56,14 +56,32 @@ class App extends React.Component {
     });
   };
 
-  pageHeader() {
-    const { currentContestId } = this.state;
-    return currentContestId ? this.currentContest().contestName : 'Naming Contests';
+  fetchNames = (nameIds) => {
+    if (nameIds.length === 0) return;
+
+    api.fetchNames(nameIds)
+      .then((names) => {
+        this.setState({ names });
+      });
+  }
+
+  lookupName = (nameId) => {
+    const { names } = this.state;
+    return (!names || !names[nameId])
+      ? { name: '...' }
+      : names[nameId];
   }
 
   currentContest() {
     const { contests, currentContestId } = this.state;
     return contests[currentContestId];
+  }
+
+  pageHeader() {
+    const { currentContestId } = this.state;
+    return currentContestId
+      ? this.currentContest().contestName
+      : 'Naming Contests';
   }
 
   currentContent() {
@@ -72,6 +90,8 @@ class App extends React.Component {
       return (
         <Contest
           contestListClick={this.fetchContestList}
+          fetchNames={this.fetchNames}
+          lookupName={this.lookupName}
           {...this.currentContest()}
         />
       );

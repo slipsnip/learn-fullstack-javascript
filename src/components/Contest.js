@@ -2,8 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Contest extends React.Component {
+  componentDidMount() {
+    const { fetchNames, nameIds } = this.props;
+    fetchNames(nameIds);
+  }
+
   render() {
-    const { description, contestListClick, lookupName, nameIds } = this.props;
+    const {
+      description,
+      contestListClick,
+      lookupName,
+      nameIds,
+    } = this.props;
+
     return (
       <div className="Contest">
         <div className="panel panel-default">
@@ -72,6 +83,9 @@ class Contest extends React.Component {
 Contest.propTypes = {
   description: PropTypes.string.isRequired,
   contestListClick: PropTypes.func.isRequired,
+  fetchNames: PropTypes.func.isRequired,
+  nameIds: PropTypes.arrayOf(PropTypes.number).isRequired,
+  lookupName: PropTypes.func.isRequired,
 };
 
 export default Contest;
