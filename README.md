@@ -17,6 +17,7 @@ Work in progress, currently at **API to fetch a list of names**
 * cd learn-fullstack-javascript
 * npm install
 * Modify ./config.js (mongodbName and mongodbUri)
+* node-babel ./loadTestData.js
 
 ## Test
 npm run dev
