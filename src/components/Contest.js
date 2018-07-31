@@ -7,6 +7,13 @@ class Contest extends React.Component {
     fetchNames(nameIds);
   }
 
+  handleSubmit = (event) => {
+    const { addName, _id } = this.props;
+    event.preventDefault();
+    addName(this.newNameInput.value, _id);
+    this.newNameInput.value = '';
+  }
+
   render() {
     const {
       description,
@@ -59,7 +66,7 @@ class Contest extends React.Component {
                 <input
                   type="text"
                   placeholder="New Name Here..."
-                  ref="newNameInput"
+                  ref={(element) => { this.newNameInput = element; }}
                   className="form-control"
                 />
                 <span className="input-group-btn">
@@ -81,11 +88,13 @@ class Contest extends React.Component {
 }
 
 Contest.propTypes = {
+  _id: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   contestListClick: PropTypes.func.isRequired,
   fetchNames: PropTypes.func.isRequired,
   nameIds: PropTypes.arrayOf(PropTypes.number).isRequired,
   lookupName: PropTypes.func.isRequired,
+  addName: PropTypes.func.isRequired,
 };
 
 export default Contest;

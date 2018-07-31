@@ -33,7 +33,7 @@ async function modifyContest(db, name, contestId) {
       { $push: { nameIds: result.insertedId } },
       { new: true },
     );
-  return [document, result.insertedId];
+  return { document, insertedId: result.insertedId };
 }
 
 const router = express.Router();
@@ -86,8 +86,8 @@ router.post('/names', (req, res) => {
   const contestId = ObjectID(req.body.contestId);
 
   catchBadRequest(modifyContest(mdb, name, contestId)
-    .then((doc, insertedId) => res.send({
-      updatedContest: doc.value,
+    .then(({ document, insertedId }) => res.send({
+      updatedContest: document.value,
       newName: { _id: insertedId, name },
     })));
 });
