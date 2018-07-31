@@ -89,6 +89,10 @@ class App extends React.Component {
       }).catch(console.error);
   }
 
+  validateForm = () => {
+
+  }
+
   currentContest() {
     const { contests, currentContestId } = this.state;
     return contests[currentContestId];
@@ -102,7 +106,7 @@ class App extends React.Component {
   }
 
   currentContent() {
-    const { contests, currentContestId } = this.state;
+    const { contests, currentContestId, errors } = this.state;
     if (currentContestId) {
       return (
         <Contest
@@ -110,6 +114,8 @@ class App extends React.Component {
           fetchNames={this.fetchNames}
           lookupName={this.lookupName}
           addName={this.addName}
+          validateForm={this.validateNames}
+          errors={errors}
           {...this.currentContest()}
         />
       );

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ErrorList from './ErrorList';
 
 class Contest extends React.Component {
   componentDidMount() {
@@ -10,8 +11,11 @@ class Contest extends React.Component {
   handleSubmit = (event) => {
     const { addName, _id } = this.props;
     event.preventDefault();
-    addName(this.newNameInput.value, _id);
-    this.newNameInput.value = '';
+    if (this.validateForm()) {
+      addName(this.newNameInput.value, _id);
+      this.newNameInput.value = '';
+    }
+
   }
 
   render() {
@@ -20,6 +24,7 @@ class Contest extends React.Component {
       contestListClick,
       lookupName,
       nameIds,
+      errors,
     } = this.props;
 
     return (
@@ -61,6 +66,7 @@ class Contest extends React.Component {
             </h3>
           </div>
           <div className="panel-body">
+            <ErrorList errors={errors} />
             <form onSubmit={this.handleSubmit}>
               <div className="input-group">
                 <input
@@ -68,6 +74,7 @@ class Contest extends React.Component {
                   placeholder="New Name Here..."
                   ref={(element) => { this.newNameInput = element; }}
                   className="form-control"
+                  required
                 />
                 <span className="input-group-btn">
                   <button type="submit" className="btn btn-info">
