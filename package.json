@@ -20,6 +20,7 @@
   "homepage": "https://github.com/slipsnip/learn-fullstack-javascript#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "hoek": "^5.0.3",
