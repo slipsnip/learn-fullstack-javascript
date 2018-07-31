@@ -2,3 +2,6 @@
 Todo:
   ☐ Fix refresh on contest page
   ☐ Try challenges
+  ☐ Handle empty name submit (api? ui?)
+  ☐ Handle name submit errors, feedback and resubmited data?
+  ☐ Long list of proposed names (ui change)
