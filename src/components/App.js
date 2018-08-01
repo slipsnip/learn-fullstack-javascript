@@ -15,7 +15,7 @@ class App extends React.Component {
     initialData: PropTypes.shape({
       contests: PropTypes.object,
     }).isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -24,9 +24,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    onPopState(event => (
-      this.setState({ currentContestId: (event.state || {}).currentContestId })
-    ));
+    onPopState(event => this.setState({ currentContestId: (event.state || {}).currentContestId }));
   }
 
   componentWillUnmount() {
@@ -44,7 +42,7 @@ class App extends React.Component {
         },
       }));
     });
-  }
+  };
 
   fetchContestList = () => {
     pushState({ currentContestId: null }, '/');
@@ -59,22 +57,20 @@ class App extends React.Component {
   fetchNames = (nameIds) => {
     if (nameIds.length === 0) return;
 
-    api.fetchNames(nameIds)
-      .then((names) => {
-        this.setState({ names });
-      });
-  }
+    api.fetchNames(nameIds).then((names) => {
+      this.setState({ names });
+    });
+  };
 
   lookupName = (nameId) => {
     const { names } = this.state;
-    return (!names || !names[nameId])
-      ? { name: '...' }
-      : names[nameId];
-  }
+    return !names || !names[nameId] ? { name: '...' } : names[nameId];
+  };
 
   addName = (newName, contestId) => {
     const { contests, names } = this.state;
-    api.addName(newName, contestId)
+    api
+      .addName(newName, contestId)
       .then((res) => {
         this.setState({
           contests: {
@@ -86,12 +82,39 @@ class App extends React.Component {
             [res.newName._id]: res.newName,
           },
         });
-      }).catch(console.error);
-  }
+      })
+      .catch(console.error);
+  };
 
-  validateForm = () => {
+  appendError = (error) => {
+    this.setState(prevState => ({
+      ...prevState,
+      errors: { ...prevState.errors, error },
+    }));
+  };
 
-  }
+  clearErrors = () => {
+    this.setState(prevState => ({
+      contests: {
+        ...prevState.contests,
+      },
+      names: {
+        ...prevState.names,
+      },
+      errors: {
+
+      },
+    }));
+  };
+
+  validateForm = (newName) => {
+    this.clearErrors();
+    if (newName === '') {
+      this.appendError('Name must not be empty');
+      return false;
+    }
+    return true;
+  };
 
   currentContest() {
     const { contests, currentContestId } = this.state;
@@ -100,9 +123,7 @@ class App extends React.Component {
 
   pageHeader() {
     const { currentContestId } = this.state;
-    return currentContestId
-      ? this.currentContest().contestName
-      : 'Naming Contests';
+    return currentContestId ? this.currentContest().contestName : 'Naming Contests';
   }
 
   currentContent() {
@@ -115,6 +136,7 @@ class App extends React.Component {
           lookupName={this.lookupName}
           addName={this.addName}
           validateForm={this.validateNames}
+          appendError={this.appendError}
           errors={errors}
           {...this.currentContest()}
         />

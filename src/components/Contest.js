@@ -9,13 +9,15 @@ class Contest extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const { addName, _id } = this.props;
+    const { addName, validateForm, appendError, _id } = this.props;
+    const { value: newName } = this.newNameInput;
     event.preventDefault();
-    if (this.validateForm()) {
-      addName(this.newNameInput.value, _id);
+    if (validateForm(newName)) {
+      addName(newName, _id);
       this.newNameInput.value = '';
+    } else {
+      appendError('Form has errors, cannot submit!');
     }
-
   }
 
   render() {
@@ -102,6 +104,12 @@ Contest.propTypes = {
   nameIds: PropTypes.arrayOf(PropTypes.number).isRequired,
   lookupName: PropTypes.func.isRequired,
   addName: PropTypes.func.isRequired,
+  validateForm: PropTypes.func.isRequired,
+  errors: PropTypes.shape({
+    id: PropTypes.number,
+    error: PropTypes.string,
+  }).isRequired,
+  appendError: PropTypes.func.isRequired,
 };
 
 export default Contest;
